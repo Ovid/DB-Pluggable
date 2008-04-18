@@ -1,0 +1,10 @@
+---
+global:
+  name: DB-Pluggable
+releases:
+  - author: 'Marcel Gruenauer <marcel@cpan.org>'
+    changes:
+      - original version
+    date: 2008-04-17T13:11:25Z
+    tags: []
+    version: 0.01

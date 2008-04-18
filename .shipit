@@ -1,0 +1,9 @@
+steps = ApplyYAMLChangeLogVersion, Manifest, DistTest, Commit, Tag, MakeDist, MyUploadCPAN, DistClean, Twitter
+
+svk.tagpattern = //local/cpan/tags/DB-Pluggable-%v
+
+twitter.config = ~/.twitterrc
+twitter.distname = DB-Pluggable
+twitter.message = shipped %d %v - soon at %u
+
+
