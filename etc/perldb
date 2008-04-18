@@ -1,0 +1,30 @@
+# "perl -d" means ~/.perldb runs before $PERL5OPT is evaluated. So we need to
+# tell ~/.perldb where to find modules, if they're not globally installed. This
+# is probably not a problem for you, but I have Hook::Modular in my working
+# directory only.
+
+use Devel::SearchINC::FindLib '/Users/marcel/svk/cpan';
+
+use DB::Pluggable;
+use YAML;
+
+# need to set the $DB::PluginHandler variable. Because DB::Pluggable derives
+# from Hook::Modular, the 'config' value could also be a string that would be
+# interpreted as a path to a YAML config file.
+
+$DB::PluginHandler = DB::Pluggable->new(config => Load <<EOYAML);
+global:
+  log:
+    level: error
+
+plugins:
+  - module: BreakOnTestNumber
+EOYAML
+
+# don't call Hook::Modular's run_main() method because that does too much for
+# our needs.
+
+$DB::PluginHandler->run;
+
+# you can add more custom debugger code below
+

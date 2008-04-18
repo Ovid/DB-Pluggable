@@ -1,0 +1,17 @@
+---
+global:
+  name: DB-Pluggable
+releases:
+  - author: 'Marcel Gruenauer <marcel@cpan.org>'
+    changes:
+      - hiding the DB package from the PAUSE indexer
+      - set version to 0.02
+    date: 2008-04-17T21:49:33Z
+    tags: []
+    version: 0.02
+  - author: 'Marcel Gruenauer <marcel@cpan.org>'
+    changes:
+      - original version
+    date: 2008-04-17T19:45:15Z
+    tags: []
+    version: 0.01
