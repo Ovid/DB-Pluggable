@@ -1,25 +1,13 @@
----
-global:
-  name: DB-Pluggable
-releases:
-  - author: 'Marcel Gruenauer <marcel@cpan.org>'
-    changes:
-      - set the version to 0.03
-      - 'fixed first year, is 2008'
-      - '.shipit: fixed svk.tagpattern'
-    date: 2008-05-29T12:04:18Z
-    tags: []
-    version: 0.03
-  - author: 'Marcel Gruenauer <marcel@cpan.org>'
-    changes:
-      - hiding the DB package from the PAUSE indexer
-      - set version to 0.02
-    date: 2008-04-17T21:49:33Z
-    tags: []
-    version: 0.02
-  - author: 'Marcel Gruenauer <marcel@cpan.org>'
-    changes:
-      - original version
-    date: 2008-04-17T19:45:15Z
-    tags: []
-    version: 0.01
+Revision history for Perl extension DB-Pluggable
+
+0.03  Thu, 29 May 2008 12:04:18 -0000 (Marcel Gruenauer <marcel@cpan.org>)
+     - set the version to 0.03
+     - fixed first year, is 2008
+     - .shipit: fixed svk.tagpattern
+
+0.02  Thu, 17 Apr 2008 21:49:33 -0000 (Marcel Gruenauer <marcel@cpan.org>)
+     - hiding the DB package from the PAUSE indexer
+     - set version to 0.02
+
+0.01  Thu, 17 Apr 2008 19:45:15 -0000 (Marcel Gruenauer <marcel@cpan.org>)
+     - original version
