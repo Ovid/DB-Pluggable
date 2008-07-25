@@ -73,11 +73,11 @@ sub run {
 
 __END__
 
-{% USE p = PodGenerated %}
+
 
 =head1 NAME
 
-{% p.package %} - add plugin support for the Perl debugger
+DB::Pluggable - add plugin support for the Perl debugger
 
 =head1 SYNOPSIS
 
@@ -184,13 +184,61 @@ the default command subroutine (e.g., C<DB::cmd_b()>) from C<perl5db.pl>
 will be called.
 
 
-{% p.write_methods %}
+
 
 =back
 
-{% p.write_inheritance %}
+DB::Pluggable inherits from L<Hook::Modular>.
 
-{% PROCESS standard_pod %}
+The superclass L<Hook::Modular> defines these methods and functions:
+
+    new(), add_plugin_path(), add_rewrite_task(), add_to_rule_namespaces(),
+    autoload_plugin(), bootstrap(), context(), dumper(), error(),
+    extract_package(), home_dir(), init(), is_loaded(), load_cache(),
+    load_plugin(), load_plugins(), log(), register_hook(),
+    rewrite_config(), rule_namespaces(), run_hook(), run_hook_once(),
+    run_main(), set_context(), should_log()
+
+The superclass L<Class::Accessor::Fast> defines these methods and
+functions:
+
+    make_accessor(), make_ro_accessor(), make_wo_accessor()
+
+The superclass L<Class::Accessor> defines these methods and functions:
+
+    _carp(), _croak(), _mk_accessors(), accessor_name_for(),
+    best_practice_accessor_name_for(), best_practice_mutator_name_for(),
+    follow_best_practice(), get(), mk_accessors(), mk_ro_accessors(),
+    mk_wo_accessors(), mutator_name_for(), set()
+
+=head1 BUGS AND LIMITATIONS
+
+No bugs have been reported.
+
+Please report any bugs or feature requests through the web interface at
+L<http://rt.cpan.org>.
+
+=head1 INSTALLATION
+
+See perlmodinstall for information and options on installing Perl modules.
+
+=head1 AVAILABILITY
+
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a CPAN
+site near you. Or see <http://www.perl.com/CPAN/authors/id/M/MA/MARCEL/>.
+
+=head1 AUTHORS
+
+Marcel GrE<uuml>nauer, C<< <marcel@cpan.org> >>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2008 by the authors.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
 
 =cut
 
