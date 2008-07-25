@@ -9,7 +9,7 @@ use Hook::LexWrap;
 use base 'Hook::Modular';
 
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 
 use constant PLUGIN_NAMESPACE => 'DB::Pluggable';
