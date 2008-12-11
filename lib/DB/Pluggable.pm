@@ -74,10 +74,9 @@ sub run {
 __END__
 
 
-
 =head1 NAME
 
-DB::Pluggable - add plugin support for the Perl debugger
+DB::Pluggable - Add plugin support for the Perl debugger
 
 =head1 SYNOPSIS
 
