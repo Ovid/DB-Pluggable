@@ -129,16 +129,16 @@ L<http://use.perl.org/~AndyArmstrong/journal/35792>.
 
 =over 4
 
-=item register
+=item C<register>
 
 Registers the hooks.
 
-=item plugin_init
+=item C<plugin_init>
 
 Hook handler for the C<plugin.init> hook. Does some initializations,
 surprisingly.
 
-=item cmd_b
+=item C<cmd_b>
 
 Hook handler for the C<db.cmd.b> hook. Checks whether the command is of the
 form C<b #12> or C<b #12, 34, ...>. If so, it sets breakpoints to break as
@@ -149,7 +149,7 @@ C<HANDLED>. If not, it returns C<DECLINED>.
 
 If it handles the command, it enables the C<watchfunction()>.
 
-=item watchfunction
+=item C<watchfunction>
 
 Hook handler for the C<db.watchfunction> hook. Checks the current test number
 from L<Test::Builder> and instructs the debugger to stop if an appropriate

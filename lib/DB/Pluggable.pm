@@ -121,12 +121,12 @@ The following hooks exist:
 
 =over 4
 
-=item plugin.init
+=item C<plugin.init>
 
 Called at the beginning of the C<run()> method. The hook doesn't get any
 arguments.
 
-=item db.watchfunction
+=item C<db.watchfunction>
 
 Called from within C<DB::watchfunction()>. If you want the debugger to call
 the function, you need to enable it by calling C<enable_watchfunction()>
@@ -135,7 +135,7 @@ possible because it is being called very often. See the
 L<DB::Pluggable::BreakOnTestNumber> source code for an example. The hook
 doesn't get any arguments.
 
-=item db.cmd.b
+=item C<db.cmd.b>
 
 Called when the C<b> debugger command (used to set breakpoints) is invoked.
 See C<run()> below for what the hook should return.
@@ -144,17 +144,17 @@ The hook passes these named arguments:
 
 =over 4
 
-=item cmd
+=item C<cmd>
 
 This is the first argument passed to C<DB::cmd_b()>.
 
-=item line
+=item C<line>
 
 This is the second argument passed to C<DB::cmd_b()>. This is the most
 important argument as it contains the command line. See the
 L<DB::Pluggable::BreakOnTestNumber> source code for an example.
 
-=item dbline
+=item C<dbline>
 
 This is the third argument passed to C<DB::cmd_b()>.
 
@@ -166,12 +166,12 @@ This is the third argument passed to C<DB::cmd_b()>.
 
 =over 4
 
-=item enable_watchfunction
+=item C<enable_watchfunction>
 
 Tells the debugger to call C<DB::watchfunction()>, which in turn calls the
 C<db.watchfunction> hook on all plugins that have registered it.
 
-=item run
+=item C<run>
 
 First it calls the C<plugin.init> hook, then it enables hooks for the relevant
 debugger commands (see above for which hooks are available).
