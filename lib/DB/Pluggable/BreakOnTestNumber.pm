@@ -1,15 +1,9 @@
 package DB::Pluggable::BreakOnTestNumber;
-
 use strict;
 use warnings;
 use DB::Pluggable::Constants ':all';
-
-
 our $VERSION = '0.04';
-
-
 use base 'Hook::Modular::Plugin';
-
 
 sub register {
     my ($self, $context) = @_;
@@ -21,12 +15,10 @@ sub register {
     );
 }
 
-
 sub plugin_init {
     my ($self, $context, $args) = @_;
     @DB::testbreak = ();
 }
-
 
 sub cmd_b {
     my ($self, $context, $args) = @_;
@@ -37,23 +29,19 @@ sub cmd_b {
 
         # enable the watchfunction JIT so we don't waste time at the beginning
         $context->enable_watchfunction;
-
         return HANDLED;
     } else {
         return DECLINED;
     }
 }
 
-
 sub watchfunction {
     my ($self, $context, $args) = @_;
-
     if (@DB::testbreak && exists $INC{'Test/Builder.pm'}) {
         my $next = Test::Builder->new->current_test + 1;
         if ($next >= $DB::testbreak[0]) {
             shift @DB::testbreak
-                while @DB::testbreak && $next >= $DB::testbreak[0];
-
+              while @DB::testbreak && $next >= $DB::testbreak[0];
             my $depth = 1;
             while (1) {
                 my $package = (caller $depth)[0];
@@ -64,21 +52,15 @@ sub watchfunction {
 
             # Doesn't stop at the breakpoint without something like this in
             # exactly this location. WTF?
-
-            use Data::Dumper; my $dummy = Dumper $depth;
-
+            use Data::Dumper;
+            my $dummy = Dumper $depth;
             no warnings 'once';
-            $DB::stack[-$depth] = 1;
+            $DB::stack[ -$depth ] = 1;
         }
     }
-
     return;
 }
-
-
 1;
-
-
 __END__
 
 
@@ -195,7 +177,7 @@ See perlmodinstall for information and options on installing Perl modules.
 
 The latest version of this module is available from the Comprehensive Perl
 Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a CPAN
-site near you. Or see <http://www.perl.com/CPAN/authors/id/M/MA/MARCEL/>.
+site near you. Or see L<http://search.cpan.org/dist/DB-Pluggable/>.
 
 =head1 AUTHORS
 

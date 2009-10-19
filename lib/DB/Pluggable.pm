@@ -1,77 +1,55 @@
 package DB::Pluggable;
-
+use 5.006;
 use strict;
 use warnings;
-use 5.006;
 use DB::Pluggable::Constants ':all';
 use Hook::LexWrap;
-
-
 use base 'Hook::Modular';
-
-
 our $VERSION = '0.04';
-
-
 use constant PLUGIN_NAMESPACE => 'DB::Pluggable';
-
 
 sub enable_watchfunction {
     my $self = shift;
     no warnings 'once';
     $DB::trace |= 4;    # Enable watchfunction
 }
-
-
-package # hide from PAUSE indexer
-    DB;
+package                 # hide from PAUSE indexer
+  DB;
 
 # switch package so as to get the desired stack trace
-
 sub watchfunction {
     return unless defined $DB::PluginHandler;
-
     my $depth = 1;
     while (1) {
         my ($package, $file, $line, $sub) = caller $depth;
         last unless defined $package;
         return if $sub =~ /::DESTROY$/;
-
         $depth++;
     }
-
     $DB::PluginHandler->run_hook('db.watchfunction');
 }
 
-
 package DB::Pluggable;
-
 
 sub run {
     my $self = shift;
-
     $self->run_hook('plugin.init');
-
     our $cmd_b_wrapper = wrap 'DB::cmd_b', pre => sub {
         my ($cmd, $line, $dbline) = @_;
-
-        my @result = $self->run_hook('db.cmd.b', {
-            cmd    => $cmd,
-            line   => $line,
-            dbline => $dbline,
-        });
+        my @result = $self->run_hook(
+            'db.cmd.b',
+            {   cmd    => $cmd,
+                line   => $line,
+                dbline => $dbline,
+            }
+        );
 
         # short-circuit (i.e., don't call the original debugger function) if
         # a plugin has handled it
-
         $_[-1] = 1 if grep { $_ eq HANDLED } @result;
     };
 }
-
-
 1;
-
-
 __END__
 
 
@@ -226,7 +204,7 @@ See perlmodinstall for information and options on installing Perl modules.
 
 The latest version of this module is available from the Comprehensive Perl
 Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a CPAN
-site near you. Or see <http://www.perl.com/CPAN/authors/id/M/MA/MARCEL/>.
+site near you. Or see L<http://search.cpan.org/dist/DB-Pluggable/>.
 
 =head1 AUTHORS
 

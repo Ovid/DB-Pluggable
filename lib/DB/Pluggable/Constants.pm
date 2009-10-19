@@ -1,30 +1,13 @@
 package DB::Pluggable::Constants;
-
 use strict;
 use warnings;
-
-
 our $VERSION = '0.04';
-
-
 use base 'Exporter';
-
-
-our %EXPORT_TAGS = (
-    util  => [ qw(HANDLED DECLINED) ],
-);
-
-
+our %EXPORT_TAGS = (util => [qw(HANDLED DECLINED)],);
 our @EXPORT_OK = @{ $EXPORT_TAGS{all} = [ map { @$_ } values %EXPORT_TAGS ] };
-
-
 use constant HANDLED  => '200';
 use constant DECLINED => '500';
-
-
 1;
-
-
 __END__
 
 
@@ -89,7 +72,7 @@ See perlmodinstall for information and options on installing Perl modules.
 
 The latest version of this module is available from the Comprehensive Perl
 Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a CPAN
-site near you. Or see <http://www.perl.com/CPAN/authors/id/M/MA/MARCEL/>.
+site near you. Or see L<http://search.cpan.org/dist/DB-Pluggable/>.
 
 =head1 AUTHORS
 
