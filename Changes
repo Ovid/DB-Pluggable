@@ -3,7 +3,8 @@ Revision history for Perl extension DB-Pluggable
 0.04  Thu Jul 25 15:27:43 CEST 2008 (Marcel Gruenauer <marcel@cpan.org>)
      - Changed dist style and Changes back to standard. People didn't like it -
        the nail that sticks out gets hammered down.
-     - Added standard test files; this will also help with CPANTS.
+     - Added standard test files; this will also help with CPANTS
+     - Added DB::Pluggable::Plugin base class for plugins
 
 0.03  Thu, 29 May 2008 12:04:18 -0000 (Marcel Gruenauer <marcel@cpan.org>)
      - set the version to 0.03

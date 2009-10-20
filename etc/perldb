@@ -3,7 +3,7 @@
 # is probably not a problem for you, but I have Hook::Modular in my working
 # directory only.
 
-use Devel::SearchINC::FindLib '/Users/marcel/svk/cpan';
+use Devel::SearchINC::FindLib '/Users/marcel/code';
 
 use DB::Pluggable;
 use YAML;

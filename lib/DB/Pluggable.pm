@@ -29,6 +29,11 @@ sub watchfunction {
     $DB::PluginHandler->run_hook('db.watchfunction');
 }
 
+sub afterinit {
+    return unless defined $DB::PluginHandler;
+    $DB::PluginHandler->run_hook('db.afterinit');
+}
+
 package DB::Pluggable;
 
 sub run {
@@ -52,6 +57,9 @@ sub run {
 1;
 __END__
 
+=for test_synopsis
+1;
+__END__
 
 =head1 NAME
 
@@ -161,33 +169,7 @@ command, or C<DECLINED> if it didn't. If no hook has C<HANDLED> the command,
 the default command subroutine (e.g., C<DB::cmd_b()>) from C<perl5db.pl>
 will be called.
 
-
-
-
 =back
-
-DB::Pluggable inherits from L<Hook::Modular>.
-
-The superclass L<Hook::Modular> defines these methods and functions:
-
-    new(), add_plugin_path(), add_rewrite_task(), add_to_rule_namespaces(),
-    autoload_plugin(), bootstrap(), context(), dumper(), error(),
-    extract_package(), home_dir(), init(), is_loaded(), load_cache(),
-    load_plugin(), load_plugins(), log(), register_hook(),
-    rewrite_config(), rule_namespaces(), run_hook(), run_hook_once(),
-    run_main(), set_context(), should_log()
-
-The superclass L<Class::Accessor::Fast> defines these methods and
-functions:
-
-    make_accessor(), make_ro_accessor(), make_wo_accessor()
-
-The superclass L<Class::Accessor> defines these methods and functions:
-
-    _carp(), _croak(), _mk_accessors(), accessor_name_for(),
-    best_practice_accessor_name_for(), best_practice_mutator_name_for(),
-    follow_best_practice(), get(), mk_accessors(), mk_ro_accessors(),
-    mk_wo_accessors(), mutator_name_for(), set()
 
 =head1 BUGS AND LIMITATIONS
 
@@ -206,17 +188,19 @@ The latest version of this module is available from the Comprehensive Perl
 Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a CPAN
 site near you. Or see L<http://search.cpan.org/dist/DB-Pluggable/>.
 
+The development version lives at L<http://github.com/hanekomu/db-pluggable/>.
+Instead of sending patches, please fork this project using the standard git
+and github infrastructure.
+
 =head1 AUTHORS
 
 Marcel GrE<uuml>nauer, C<< <marcel@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2009 by the authors.
+Copyright 2008-2009 by Marcel GrE<uuml>nauer.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
-
 =cut
-

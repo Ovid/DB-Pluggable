@@ -63,7 +63,9 @@ sub watchfunction {
 1;
 __END__
 
-
+=for test_synopsis
+1;
+__END__
 
 =head1 NAME
 
@@ -99,7 +101,6 @@ DB::Pluggable::BreakOnTestNumber - Debugger plugin to break on Test::Builder-bas
       DB<1> b #5
       DB<2> r
     
-
 =head1 DESCRIPTION
 
 This debugger plugin extends the debugger's C<b> command - used to set
@@ -137,30 +138,7 @@ Hook handler for the C<db.watchfunction> hook. Checks the current test number
 from L<Test::Builder> and instructs the debugger to stop if an appropriate
 test number has been reached.
 
-
-
 =back
-
-DB::Pluggable::BreakOnTestNumber inherits from L<Hook::Modular::Plugin>.
-
-The superclass L<Hook::Modular::Plugin> defines these methods and
-functions:
-
-    new(), assets_dir(), class_id(), conf(), decrypt_config(),
-    dispatch_rule_on(), do_walk(), init(), load_assets(), log(),
-    plugin_id(), rule(), walk_config_encryption()
-
-The superclass L<Class::Accessor::Fast> defines these methods and
-functions:
-
-    make_accessor(), make_ro_accessor(), make_wo_accessor()
-
-The superclass L<Class::Accessor> defines these methods and functions:
-
-    _carp(), _croak(), _mk_accessors(), accessor_name_for(),
-    best_practice_accessor_name_for(), best_practice_mutator_name_for(),
-    follow_best_practice(), get(), mk_accessors(), mk_ro_accessors(),
-    mk_wo_accessors(), mutator_name_for(), set()
 
 =head1 BUGS AND LIMITATIONS
 
@@ -179,17 +157,19 @@ The latest version of this module is available from the Comprehensive Perl
 Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a CPAN
 site near you. Or see L<http://search.cpan.org/dist/DB-Pluggable/>.
 
+The development version lives at L<http://github.com/hanekomu/db-pluggable/>.
+Instead of sending patches, please fork this project using the standard git
+and github infrastructure.
+
 =head1 AUTHORS
 
 Marcel GrE<uuml>nauer, C<< <marcel@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2009 by the authors.
+Copyright 2008-2009 by Marcel GrE<uuml>nauer.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
-
 =cut
-

@@ -10,8 +10,6 @@ use constant DECLINED => '500';
 1;
 __END__
 
-
-
 =head1 NAME
 
 DB::Pluggable::Constants - Constants for debugger plugin hook methods
@@ -24,9 +22,9 @@ DB::Pluggable::Constants - Constants for debugger plugin hook methods
 
     sub do_it {
         my ($self, $context, $args) = @_;
-        ...
-        if (...) {
-            ...
+        # ...
+        if ("some condition") {
+            # ...
             return HANDLED;
         } else {
             return DECLINED;
@@ -74,17 +72,19 @@ The latest version of this module is available from the Comprehensive Perl
 Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a CPAN
 site near you. Or see L<http://search.cpan.org/dist/DB-Pluggable/>.
 
+The development version lives at L<http://github.com/hanekomu/db-pluggable/>.
+Instead of sending patches, please fork this project using the standard git
+and github infrastructure.
+
 =head1 AUTHORS
 
 Marcel GrE<uuml>nauer, C<< <marcel@cpan.org> >>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2009 by the authors.
+Copyright 2008-2009 by Marcel GrE<uuml>nauer.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
-
 =cut
-
