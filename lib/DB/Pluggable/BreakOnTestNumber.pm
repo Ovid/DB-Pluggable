@@ -100,7 +100,7 @@ DB::Pluggable::BreakOnTestNumber - Debugger plugin to break on Test::Builder-bas
     ...
       DB<1> b #5
       DB<2> r
-    
+
 =head1 DESCRIPTION
 
 This debugger plugin extends the debugger's C<b> command - used to set
