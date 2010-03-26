@@ -33,7 +33,6 @@ sub run {
         $_[-1] = 1 if grep { $_ eq HANDLED } @result;
     };
 }
-
 1;
 
 package                 # hide from PAUSE indexer
@@ -56,7 +55,6 @@ sub afterinit {
     return unless defined $DB::PluginHandler;
     $DB::PluginHandler->run_hook('db.afterinit');
 }
-
 1;
 
 =for test_synopsis

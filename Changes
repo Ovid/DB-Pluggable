@@ -1,6 +1,7 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+    - DB::Pluggable::Plugin now returns a true value
 
 1.100850  2010-03-26 20:50:12 Europe/Vienna
     - converted the distribution to Dist::Zilla-style

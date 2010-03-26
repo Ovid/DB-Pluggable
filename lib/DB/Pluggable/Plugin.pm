@@ -13,6 +13,7 @@ sub make_command {
     *{$sub_name} = $code;
     $DB::alias{$cmd_name} = "/./; &$sub_name;";
 }
+1;
 
 =head1 SYNOPSIS
 
