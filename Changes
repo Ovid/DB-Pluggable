@@ -1,6 +1,8 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+
+1.100851  2010-03-26 20:56:57 Europe/Vienna
     - DB::Pluggable::Plugin now returns a true value
 
 1.100850  2010-03-26 20:50:12 Europe/Vienna
