@@ -1,19 +1,22 @@
-Revision history for Perl extension DB-Pluggable
+Revision history for Perl extension {{$dist->name}}
+
+{{$NEXT}}
+    - converted the distribution to Dist::Zilla-style
 
 0.04  Thu Jul 25 15:27:43 CEST 2008 (Marcel Gruenauer <marcel@cpan.org>)
-     - Changed dist style and Changes back to standard. People didn't like it -
-       the nail that sticks out gets hammered down.
-     - Added standard test files; this will also help with CPANTS
-     - Added DB::Pluggable::Plugin base class for plugins
+    - Changed dist style and Changes back to standard. People didn't like it -
+      the nail that sticks out gets hammered down.
+    - Added standard test files; this will also help with CPANTS
+    - Added DB::Pluggable::Plugin base class for plugins
 
 0.03  Thu, 29 May 2008 12:04:18 -0000 (Marcel Gruenauer <marcel@cpan.org>)
-     - set the version to 0.03
-     - fixed first year, is 2008
-     - .shipit: fixed svk.tagpattern
+    - set the version to 0.03
+    - fixed first year, is 2008
+    - .shipit: fixed svk.tagpattern
 
 0.02  Thu, 17 Apr 2008 21:49:33 -0000 (Marcel Gruenauer <marcel@cpan.org>)
-     - hiding the DB package from the PAUSE indexer
-     - set version to 0.02
+    - hiding the DB package from the PAUSE indexer
+    - set version to 0.02
 
 0.01  Thu, 17 Apr 2008 19:45:15 -0000 (Marcel Gruenauer <marcel@cpan.org>)
-     - original version
+    - original version

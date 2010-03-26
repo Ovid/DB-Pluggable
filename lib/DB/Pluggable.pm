@@ -1,11 +1,12 @@
-package DB::Pluggable;
-use 5.006;
+use 5.008;
 use strict;
 use warnings;
+
+package DB::Pluggable;
+# ABSTRACT: Add plugin support for the Perl debugger
 use DB::Pluggable::Constants ':all';
 use Hook::LexWrap;
-use base 'Hook::Modular';
-our $VERSION = '0.04';
+use parent 'Hook::Modular';
 use constant PLUGIN_NAMESPACE => 'DB::Pluggable';
 
 sub enable_watchfunction {
@@ -13,6 +14,28 @@ sub enable_watchfunction {
     no warnings 'once';
     $DB::trace |= 4;    # Enable watchfunction
 }
+
+sub run {
+    my $self = shift;
+    $self->run_hook('plugin.init');
+    our $cmd_b_wrapper = wrap 'DB::cmd_b', pre => sub {
+        my ($cmd, $line, $dbline) = @_;
+        my @result = $self->run_hook(
+            'db.cmd.b',
+            {   cmd    => $cmd,
+                line   => $line,
+                dbline => $dbline,
+            }
+        );
+
+        # short-circuit (i.e., don't call the original debugger function) if
+        # a plugin has handled it
+        $_[-1] = 1 if grep { $_ eq HANDLED } @result;
+    };
+}
+
+1;
+
 package                 # hide from PAUSE indexer
   DB;
 
@@ -34,36 +57,11 @@ sub afterinit {
     $DB::PluginHandler->run_hook('db.afterinit');
 }
 
-package DB::Pluggable;
-
-sub run {
-    my $self = shift;
-    $self->run_hook('plugin.init');
-    our $cmd_b_wrapper = wrap 'DB::cmd_b', pre => sub {
-        my ($cmd, $line, $dbline) = @_;
-        my @result = $self->run_hook(
-            'db.cmd.b',
-            {   cmd    => $cmd,
-                line   => $line,
-                dbline => $dbline,
-            }
-        );
-
-        # short-circuit (i.e., don't call the original debugger function) if
-        # a plugin has handled it
-        $_[-1] = 1 if grep { $_ eq HANDLED } @result;
-    };
-}
 1;
-__END__
 
 =for test_synopsis
 1;
 __END__
-
-=head1 NAME
-
-DB::Pluggable - Add plugin support for the Perl debugger
 
 =head1 SYNOPSIS
 
@@ -149,16 +147,12 @@ This is the third argument passed to C<DB::cmd_b()>.
 
 =back
 
-=head1 METHODS
-
-=over 4
-
-=item C<enable_watchfunction>
+=method enable_watchfunction
 
 Tells the debugger to call C<DB::watchfunction()>, which in turn calls the
 C<db.watchfunction> hook on all plugins that have registered it.
 
-=item C<run>
+=method run
 
 First it calls the C<plugin.init> hook, then it enables hooks for the relevant
 debugger commands (see above for which hooks are available).
@@ -168,39 +162,3 @@ L<DB::Pluggable::Constants> - either C<HANDLED> if the hook has handled the
 command, or C<DECLINED> if it didn't. If no hook has C<HANDLED> the command,
 the default command subroutine (e.g., C<DB::cmd_b()>) from C<perl5db.pl>
 will be called.
-
-=back
-
-=head1 BUGS AND LIMITATIONS
-
-No bugs have been reported.
-
-Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org>.
-
-=head1 INSTALLATION
-
-See perlmodinstall for information and options on installing Perl modules.
-
-=head1 AVAILABILITY
-
-The latest version of this module is available from the Comprehensive Perl
-Archive Network (CPAN). Visit <http://www.perl.com/CPAN/> to find a CPAN
-site near you. Or see L<http://search.cpan.org/dist/DB-Pluggable/>.
-
-The development version lives at L<http://github.com/hanekomu/db-pluggable/>.
-Instead of sending patches, please fork this project using the standard git
-and github infrastructure.
-
-=head1 AUTHORS
-
-Marcel GrE<uuml>nauer, C<< <marcel@cpan.org> >>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright 2008-2009 by Marcel GrE<uuml>nauer.
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-=cut
