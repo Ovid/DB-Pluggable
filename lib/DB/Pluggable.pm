@@ -28,8 +28,8 @@ sub run {
             }
         );
 
-        # short-circuit (i.e., don't call the original debugger function) if
-        # a plugin has handled it
+        # short-circuit (i.e., don't call the original debugger function)
+        # if a plugin has handled it
         $_[-1] = 1 if grep { $_ eq HANDLED } @result;
     };
 }
