@@ -1,6 +1,8 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+    - added db.eval hook so you can define custom commands that take arguments
+    - removed unused variables and code
 
 1.100851  2010-03-26 20:56:57 Europe/Vienna
     - DB::Pluggable::Plugin now returns a true value

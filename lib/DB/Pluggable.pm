@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package DB::Pluggable;
+
 # ABSTRACT: Add plugin support for the Perl debugger
 use DB::Pluggable::Constants ':all';
 use Hook::LexWrap;
@@ -35,10 +36,11 @@ sub run {
 }
 1;
 
-package                 # hide from PAUSE indexer
-  DB;
-
 # switch package so as to get the desired stack trace
+package    # hide from PAUSE indexer
+  DB;
+use DB::Pluggable::Constants ':all';
+
 sub watchfunction {
     return unless defined $DB::PluginHandler;
     my $depth = 1;
@@ -55,6 +57,13 @@ sub afterinit {
     return unless defined $DB::PluginHandler;
     $DB::PluginHandler->run_hook('db.afterinit');
 }
+no warnings 'redefine';
+my $eval = \&DB::eval;
+*eval = sub {
+    my @result = $DB::PluginHandler->run_hook('db.eval', { eval => $eval });
+    return if grep { $_ eq HANDLED } @result;
+    $eval->();
+};
 1;
 
 =for test_synopsis
@@ -62,6 +71,23 @@ sub afterinit {
 __END__
 
 =head1 SYNOPSIS
+
+    $ cat ~/.perldb
+
+    use DB::Pluggable;
+    use Hook::Modular::Builder;
+    my $config = builder {
+        log_level 'error';
+        enable 'BreakOnTestNumber';
+        enable 'StackTraceAsHTML';
+        enable 'TypeAhead', type => [ '{l', 'c' ] if $ENV{DBTYPEAHEAD};
+        enable 'Dumper';
+    };
+
+    $DB::PluginHandler = DB::Pluggable->new(config => $config);
+    $DB::PluginHandler->run;
+
+Alternatively, build the configuration yourself, for example, using L<YAML>:
 
     $ cat ~/.perldb
 
@@ -78,6 +104,8 @@ __END__
     EOYAML
 
     $DB::PluginHandler->run;
+
+Then:
 
     $ perl -d foo.pl
 
@@ -143,7 +171,48 @@ This is the third argument passed to C<DB::cmd_b()>.
 
 =back
 
+=item C<db.eval>
+
+The debugger's C<eval()> function is overridden so we can hook into it. This
+is needed to define new debugger commands that take arguments. Each plugin
+that registered this hook will get a chance to inspect the command line, which
+is the last line in C<$DB::evalarg> and act on it. Each hook gets passed a
+code reference in the original C<DB::eval()> function. If a plugin decides the
+handle the command, it needs to call the original function and return
+C<HANDLED> - see L<DB::Pluggable::Constants> - to indicate that it has done
+so. If a plugin does not want to handle the command, it must return
+C<DECLINED>.
+
+The hook passes these named arguments:
+
+=over 4
+
+=item C<eval>
+
+The code reference to the original C<DB::eval()> function.
+
 =back
+
+=back
+
+For example, if you wanted to define a new C<xx> debugger command, you could
+use:
+
+    sub register {
+        my ($self, $context) = @_;
+        $context->register_hook(
+            $self,
+            'db.eval' => $self->can('eval'),
+        );
+    }
+
+    sub eval {
+        my ($self, $context, $args) = @_;
+        return DECLINED unless $DB::evalarg =~ s/\n\s*xx\s+([^\n]+)$/\n $1/;
+        ... # handle the actual command
+        $args->{eval}->();
+        HANDLED;
+    }
 
 =method enable_watchfunction
 

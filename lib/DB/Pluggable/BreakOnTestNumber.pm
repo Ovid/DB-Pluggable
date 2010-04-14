@@ -18,7 +18,6 @@ sub register {
 }
 
 sub plugin_init {
-    my ($self, $context, $args) = @_;
     @DB::testbreak = ();
 }
 
@@ -38,7 +37,7 @@ sub cmd_b {
 }
 
 sub watchfunction {
-    my ($self, $context, $args) = @_;
+    my $self = shift;
     if (@DB::testbreak && exists $INC{'Test/Builder.pm'}) {
         my $next = Test::Builder->new->current_test + 1;
         if ($next >= $DB::testbreak[0]) {
@@ -52,10 +51,6 @@ sub watchfunction {
                 $depth++;
             }
 
-            # Doesn't stop at the breakpoint without something like this in
-            # exactly this location. WTF?
-            use Data::Dumper;
-            my $dummy = Dumper $depth;
             no warnings 'once';
             $DB::stack[ -$depth ] = 1;
         }

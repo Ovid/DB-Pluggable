@@ -13,7 +13,7 @@ sub register {
 }
 
 sub afterinit {
-    my ($self, $context, $args) = @_;
+    my $self = shift;
     my $type = $self->conf->{type};
     die "TypeAhead: need 'type' config key\n" unless defined $type;
     die "TypeAhead: 'type' must be an array reference of things to type\n"
@@ -22,6 +22,7 @@ sub afterinit {
     if (my $env_key = $self->conf->{ifenv}) {
         return unless $ENV{$env_key};
     }
+    no warnings 'once';
     push @DB::typeahead, @$type;
 }
 1;
